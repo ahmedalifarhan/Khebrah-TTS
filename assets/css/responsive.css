@@ -141,12 +141,68 @@
 .single-features-row{
   margin-bottom: 80px;
 }
-.professional-wrapper {
-  display: inline-table;
-  align-items: center;
-  justify-content: center;  
-  gap: 20px;  
-}
+  .professional-wrapper {
+    display: inline-table;
+    align-items: center;
+    justify-content: center;  
+    gap: 20px;  
+  }
+
+  /* Sticky Scroll Section - إعادة تصميم على الشاشات الصغيرة */
+  .sticky-scroll-wrapper {
+    flex-direction: column;
+  }
+  
+  /* إخفاء الصورة الثابتة على الشاشات الصغيرة */
+  .sticky-image-container {
+    display: none;
+  }
+  
+  .sticky-text-content {
+    width: 100%;
+  }
+  
+  /* إعادة تصميم المقاطع - صورة فوق، نص تحت */
+  .sticky-text-block {
+    min-height: auto;
+    height: auto;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  /* الصورة في كل مقطع على الشاشات الصغيرة */
+  .block-image-mobile {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    order: 1;
+  }
+  
+  .block-image-mobile img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* النص تحت الصورة */
+  .sticky-text-inner {
+    width: 100%;
+    padding-right: 0;
+    margin-top: 0;
+    order: 2;
+    text-align: center;
+  }
+  
+  .sticky-text-inner h2 {
+    text-align: center !important;
+  }
+  
+  .sticky-text-inner p {
+    text-align: center !important;
+  }
 
 }
 
@@ -351,11 +407,21 @@
 }
 
 /* Footer Responsive Styles */
+/* Footer Responsive - الشاشات الأصغر من large (992px) */
 @media (max-width: 991px) {
+  .footer-section {
+    padding: 40px 0 20px;
+    margin-top: 60px;
+  }
+  
   .footer-logo {
     text-align: center;
     padding-right: 0;
     margin-bottom: 30px;
+  }
+  
+  .footer-logo-img {
+    max-width: 120px;
   }
   
   .footer-links {
@@ -365,13 +431,151 @@
   
   .footer-nav {
     justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .footer-link {
+    font-size: 15px;
   }
   
   .footer-bottom {
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    gap: 8px;
     text-align: center;
     justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .footer-copyright,
+  .footer-copyright-symbol {
+    font-size: 13px;
+  }
+  
+  .footer-social-link {
+    margin: 0 5px;
+  }
+}
+
+/* Footer Responsive - الشاشات المتوسطة (768px) */
+@media (max-width: 768px) {
+  .footer-section {
+    padding: 35px 0 20px;
+    margin-top: 50px;
+  }
+  
+  .footer-logo {
+    margin-bottom: 25px;
+  }
+  
+  .footer-logo-img {
+    max-width: 100px;
+  }
+  
+  .footer-nav {
+    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-link {
+    font-size: 14px;
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .footer-bottom {
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .footer-copyright,
+  .footer-copyright-symbol {
+    font-size: 12px;
+  }
+}
+
+/* Footer Responsive - الشاشات الصغيرة (576px) */
+@media (max-width: 576px) {
+  .footer-section {
+    padding: 30px 0 15px;
+    margin-top: 40px;
+  }
+  
+  .footer-logo {
+    margin-bottom: 20px;
+  }
+  
+  .footer-logo-img {
+    max-width: 90px;
+  }
+  
+  .footer-nav {
+    gap: 12px;
+  }
+  
+  .footer-link {
+    font-size: 13px;
+    padding: 5px 0;
+  }
+  
+  .footer-bottom {
+    flex-direction: row;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .footer-copyright,
+  .footer-copyright-symbol {
+    font-size: 11px;
+  }
+  
+  .footer-social-link {
+    margin: 0 3px;
+  }
+  
+  .footer-social-link img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Footer Responsive - الشاشات الصغيرة جداً (480px) */
+@media (max-width: 480px) {
+  .footer-section {
+    padding: 25px 0 15px;
+    margin-top: 30px;
+  }
+  
+  .footer-logo-img {
+    max-width: 80px;
+  }
+  
+  .footer-nav {
+    gap: 10px;
+  }
+  
+  .footer-link {
+    font-size: 12px;
+  }
+  
+  .footer-bottom {
+    flex-direction: row;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .footer-copyright,
+  .footer-copyright-symbol {
+    font-size: 10px;
   }
 }
 

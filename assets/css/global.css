@@ -8,7 +8,7 @@
    Fonts
    - Defines custom fonts used in the project.
    =============================== */
-@font-face {
+/* @font-face {
   font-family: "FFShamelReg";
   src: url(../fonts/ArbFONTS-FFShamelFamily-SansOneBook.ttf);
 }
@@ -16,7 +16,7 @@
 @font-face {
   font-family: "FFShamelBd";
   src: url(../fonts/ArbFONTS-FFShamelFamily-SansOneBold.ttf);
-}
+} */
 
 @font-face {
   font-family: "AlexandriaReg";

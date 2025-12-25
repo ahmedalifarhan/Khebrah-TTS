@@ -322,6 +322,190 @@ $(document).ready(function () {
     whyProfessionalObserver.observe(whyProfessionalSection);
   }
 
+  // Sticky Scroll Section - Image Change on Scroll
+  // يعمل فقط على الشاشات الأكبر من 991 بكسل
+  const stickyScrollSection = document.querySelector('.sticky-scroll-section');
+  
+  // إضافة الصور للمقاطع على الشاشات الصغيرة
+  function addImagesToMobileBlocks() {
+    if (stickyScrollSection) {
+      const textBlocks = stickyScrollSection.querySelectorAll('.sticky-text-block');
+      
+      if (window.innerWidth <= 991) {
+        // على الشاشات الصغيرة: إضافة الصور
+        textBlocks.forEach(function(block) {
+          let imageElement = block.querySelector('.block-image-mobile');
+          if (!imageElement) {
+            const imageSrc = block.getAttribute('data-image');
+            if (imageSrc) {
+              imageElement = document.createElement('div');
+              imageElement.className = 'block-image-mobile';
+              imageElement.innerHTML = '<img src="' + imageSrc + '" alt="Professional Image">';
+              block.insertBefore(imageElement, block.firstChild);
+            }
+          }
+        });
+      } else {
+        // على الشاشات الكبيرة: إزالة الصور
+        const mobileImages = stickyScrollSection.querySelectorAll('.block-image-mobile');
+        mobileImages.forEach(function(img) {
+          img.remove();
+        });
+      }
+    }
+  }
+  
+  // استدعاء الدالة عند تحميل الصفحة وتغيير الحجم
+  addImagesToMobileBlocks();
+  window.addEventListener('resize', addImagesToMobileBlocks);
+  
+  if (stickyScrollSection && window.innerWidth > 991) {
+    const stickyImage = document.getElementById('sticky-feature-image');
+    const stickyImageContainer = stickyScrollSection.querySelector('.sticky-image-container');
+    const textBlocks = stickyScrollSection.querySelectorAll('.sticky-text-block');
+    
+    if (stickyImage && textBlocks.length > 0 && stickyImageContainer) {
+      let currentImageIndex = -1;
+      const firstTextBlock = textBlocks[0];
+      
+      function updateStickyImage() {
+        const windowHeight = window.innerHeight;
+        const sectionTop = stickyScrollSection.offsetTop;
+        const scrollPosition = window.scrollY;
+        const viewportCenter = scrollPosition + windowHeight / 2;
+        
+        // حساب موضع أول مقطع نصي
+        const firstBlockTop = sectionTop + firstTextBlock.offsetTop;
+        const firstBlockCenter = firstBlockTop + firstTextBlock.offsetHeight / 2;
+        
+        // حساب موضع آخر مقطع نصي
+        const lastTextBlock = textBlocks[textBlocks.length - 1];
+        const lastBlockTop = sectionTop + lastTextBlock.offsetTop;
+        const lastBlockBottom = lastBlockTop + lastTextBlock.offsetHeight;
+        
+        // حساب المسافة والموضع مرة واحدة
+        const totalScrollDistance = lastBlockBottom - firstBlockTop;
+        const scrollProgress = viewportCenter - firstBlockTop;
+        const segmentSize = totalScrollDistance / textBlocks.length;
+        
+        // حساب نقاط التغيير مع تأخير للصورة الثانية والثالثة
+        const firstToSecondThreshold = segmentSize * 1.2; // تأخير 20% إضافية للصورة الثانية
+        const secondToThirdThreshold = segmentSize * 2.3; // تأخير ظهور الصورة الثالثة (230% من الجزء الأول)
+        
+        // حساب الفهرس بناءً على المسافة المتساوية مع تأخير للصورة الثانية والثالثة
+        let activeBlockIndex = 0;
+        
+        if (scrollProgress < firstToSecondThreshold) {
+          // الصورة الأولى: حتى 120% من الجزء الأول
+          activeBlockIndex = 0;
+        } else if (scrollProgress < secondToThirdThreshold) {
+          // الصورة الثانية: من 120% إلى 230% من الجزء الأول
+          activeBlockIndex = 1;
+        } else {
+          // الصورة الثالثة: من 230% فما فوق - تثبت ولا تختفي
+          activeBlockIndex = 2;
+        }
+        
+        // التأكد من أن الفهرس في النطاق الصحيح
+        activeBlockIndex = Math.max(0, Math.min(activeBlockIndex, textBlocks.length - 1));
+        
+        // حساب إذا كانت الصورة الثالثة نشطة
+        const isThirdImageActive = activeBlockIndex === 2;
+        
+        // الصورة تبدأ sticky عند وصول أول مقطع (بداية أول نص)
+        const shouldStartSticky = scrollPosition + windowHeight / 2 >= firstBlockTop;
+        
+        // الصورة تنتهي sticky عند نهاية آخر مقطع (نهاية آخر نص)
+        // لكن إذا كانت الصورة الثالثة نشطة، تبقى sticky
+        const shouldEndSticky = scrollPosition + windowHeight / 2 >= lastBlockBottom;
+        
+        // تفعيل/إلغاء sticky بناءً على موضع أول وآخر نص
+        // الصورة تبدأ sticky عند بداية أول نص
+        // إذا كانت الصورة الثالثة نشطة، تبقى sticky حتى بعد نهاية آخر نص
+        if (shouldStartSticky && (!shouldEndSticky || isThirdImageActive)) {
+          stickyImageContainer.classList.add('sticky-active');
+        } else if (!isThirdImageActive) {
+          stickyImageContainer.classList.remove('sticky-active');
+        }
+        
+        // Check if we're within the text blocks range
+        const textBlocksStart = firstBlockTop;
+        const textBlocksEnd = lastBlockBottom;
+        
+        if (shouldStartSticky && (!shouldEndSticky || isThirdImageActive) && scrollPosition <= textBlocksEnd) {
+          
+          // Update image if index changed
+          if (activeBlockIndex !== currentImageIndex) {
+            currentImageIndex = activeBlockIndex;
+            const newImageSrc = textBlocks[activeBlockIndex].getAttribute('data-image');
+            if (newImageSrc) {
+              const fullImagePath = new URL(newImageSrc, window.location.href).href;
+              
+              // Only change if different
+              if (stickyImage.src !== fullImagePath) {
+                // Fade out
+                stickyImage.style.transition = 'opacity 0.3s ease-in-out';
+                stickyImage.style.opacity = '0';
+                
+                setTimeout(function() {
+                  stickyImage.src = newImageSrc;
+                  // Fade in
+                  setTimeout(function() {
+                    stickyImage.style.opacity = '1';
+                  }, 50);
+                }, 300);
+              }
+            }
+          }
+        }
+      }
+      
+      // Use IntersectionObserver for better performance
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      };
+      
+      const sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            updateStickyImage();
+          }
+        });
+      }, observerOptions);
+      
+      sectionObserver.observe(stickyScrollSection);
+      
+      // Also listen to scroll for real-time updates (فقط على الشاشات الكبيرة)
+      let scrollTimeout;
+      const scrollHandler = function() {
+        if (window.innerWidth > 991) {
+          if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+          }
+          scrollTimeout = setTimeout(updateStickyImage, 16); // ~60fps
+        }
+      };
+      
+      window.addEventListener('scroll', scrollHandler, { passive: true });
+      
+      // إعادة التحقق عند تغيير حجم الشاشة
+      window.addEventListener('resize', function() {
+        if (window.innerWidth <= 991) {
+          // إلغاء sticky على الشاشات الصغيرة
+          stickyImageContainer.classList.remove('sticky-active');
+        } else {
+          // إعادة تفعيل على الشاشات الكبيرة
+          updateStickyImage();
+        }
+      });
+      
+      // Initial call
+      updateStickyImage();
+    }
+  }
+
   // Consultation Methods Section Scroll Animation
   const consultationObserver = new IntersectionObserver(
     function(entries) {
@@ -421,19 +605,33 @@ $(document).ready(function () {
 
 
 
+// Hero CTA Button - يبقى ظاهراً أثناء السكرول في الهيرو
 window.addEventListener("scroll", function() {
   const hero = document.querySelector(".hero");
-  const cta = hero.querySelector(".btn.btn_outline");
+  const cta = hero ? hero.querySelector(".cta-btn-fixed") : null;
+  
+  if (!hero || !cta) return;
+  
   const heroTop = hero.offsetTop;
   const heroBottom = hero.offsetTop + hero.offsetHeight;
-
-  if (window.scrollY > heroTop && window.scrollY < heroBottom) {
-    // أثناء المرور بالـ Hero → الزر ثابت وظاهر
-    cta.classList.add("fixed");
-    cta.classList.remove("hidden");
+  const scrollPosition = window.scrollY;
+  const windowHeight = window.innerHeight;
+  
+  // حساب نقطة العودة (قبل نهاية الهيرو بـ 100px)
+  const returnPoint = heroBottom - 100;
+  
+  // إذا كنا داخل الهيرو ولكن لم نصل لنقطة العودة
+  if (scrollPosition >= heroTop && scrollPosition < returnPoint) {
+    // الزر ثابت وظاهر
+    cta.classList.add("cta-fixed");
+    cta.classList.remove("cta-hidden");
+  } else if (scrollPosition >= returnPoint && scrollPosition < heroBottom) {
+    // قبل نهاية الهيرو - الزر يرجع لمكانه الأصلي
+    cta.classList.remove("cta-fixed");
+    cta.classList.remove("cta-hidden");
   } else {
-    // خارج الـ Hero → الزر يختفي
-    cta.classList.remove("fixed");
-    cta.classList.add("hidden");
+    // خارج الهيرو - الزر يختفي
+    cta.classList.remove("cta-fixed");
+    cta.classList.add("cta-hidden");
   }
 });
