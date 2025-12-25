@@ -1,0 +1,390 @@
+/* ===============================
+   Import styles
+   - manage and organize CSS imports in the project.
+   =============================== */
+@import url(imports.css);
+
+/* ===============================
+   Fonts
+   - Defines custom fonts used in the project.
+   =============================== */
+/* @font-face {
+  font-family: "FFShamelReg";
+  src: url(../fonts/ArbFONTS-FFShamelFamily-SansOneBook.ttf);
+}
+
+@font-face {
+  font-family: "FFShamelBd";
+  src: url(../fonts/ArbFONTS-FFShamelFamily-SansOneBold.ttf);
+} */
+
+@font-face {
+  font-family: "AlexandriaReg";
+  src: url(../fonts/Alexandria-Regular.ttf);
+}
+@font-face {
+  font-family: "AlexandriaBd";
+  src: url(../fonts/Alexandria-SemiBold.ttf);
+}
+
+/* End Fonts */
+
+/* ===============================
+   Global Resets and Variables
+   - Sets root variables for colors, gradients, and spacing.
+   - Resets default styles for elements like body, links, and lists.
+   - Includes base styles for typography and layout.
+   =============================== */
+:root {
+  --main-color: #00C2E0;
+  --sec-color: #fff;
+  --dark-color: #3c3c3c;
+  --bg-color: #fef9f7;
+  --bg-grad: linear-gradient(
+    180deg,
+    #231300 72.63%,
+    rgba(55, 34, 9, 0.86) 100%
+  );
+  --56: 56px;
+  --32: 32px;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "AlexandriaReg";
+  direction: rtl;
+  text-align: start;
+  /* overflow-x: hidden; */
+}
+
+/* Style the scrollbar width */
+body::-webkit-scrollbar {
+  width: 8px; /* Consistent width across devices */
+}
+
+/* Style the scrollbar track */
+
+body::-webkit-scrollbar-track {
+  background: rgba(57, 43, 108, 1);
+  /* border-radius: 10px;  */
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Style the scrollbar thumb */
+body::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+  border-radius: 10px;
+  border: 2px solid rgba(57, 43, 108, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+  transition: all 0.3s linear;
+}
+
+a:hover {
+  text-decoration: none;
+  color: var(--main-color) !important;
+}
+
+a:focus {
+  text-decoration: none;
+}
+
+button,
+button:hover {
+  transition: all 0.3s linear;
+}
+
+p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 25px;
+  overflow-wrap: anywhere;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  display: block;
+  transition: all 0.3s linear;
+}
+
+li {
+  display: block;
+  list-style: none;
+  transition: all 0.3s linear;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.padding {
+  padding: 0 !important;
+}
+
+img {
+  max-width: 100%;
+}
+
+input,
+button,
+input:focus,
+button:focus,
+input:active,
+button:active,
+button:hover,
+textarea:active,
+textarea:focus,
+select,
+select:active,
+select:focus {
+  outline: none !important;
+}
+
+textarea {
+  resize: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: capitalize;
+}
+/* End Resets */
+
+/* ===============================
+   Heading Styles
+   - Defines custom heading classes for various design needs.
+   - Includes decorative styles for specific heading types.
+   =============================== */
+.heading {
+  text-align: center;
+}
+
+h2.heading_no_sh2 {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 28px;
+  color: #150129;
+  font-family: "FFShamelFamilyBold";
+}
+
+h2.heading_sh1 {
+  text-align: center;
+  margin-bottom: 35px;
+  position: relative;
+  font-size: 32px;
+  color: #150129;
+  font-family: "AlexandriaBd";
+  display: inline-block;
+  padding: 74px;
+}
+
+h2.heading_sh1::before {
+  content: "";
+  background-image: url(../images/h_shape.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  width: 100%;
+  height: 125px;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+h2.heading_sh2 {
+  text-align: center;
+  margin-bottom: 70px;
+  position: relative;
+  font-size: 32px;
+  color: #150129;
+  font-family: "AlexandriaBd";
+}
+
+h2.heading_sh2::before {
+  content: "";
+  background-image: url(../images/head_shtyp.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  width: 301px;
+  height: 125px;
+  top: 45px;
+  right: 50%;
+  transform: translateX(50%);
+}
+/* End Headings */
+
+/* ===============================
+   Button Styles
+   - Defines reusable button classes with variants (e.g., white button).
+   - Includes hover and transition effects for buttons.
+   =============================== */
+.btn {
+  border: 2px solid var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none !important;
+  font-size: 14px;
+  text-transform: capitalize;
+  color: #fff;
+  background: var(--main-color);
+  border-radius: 50px;
+  font-weight: 400;
+  padding: 9px 16px 6px;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  transition: all 0.5s;
+}
+
+.btn::before,
+.btn::before {
+  background: var(--sec-color);
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: 100%;
+  height: 0%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: all 0.6s ease;
+}
+
+.btn:hover::before,
+.btn:hover::before {
+  height: 580%;
+}
+
+.btn span {
+  position: relative;
+  z-index: 2;
+}
+
+.btn.btn-white::before,
+.btn.btn-white::before {
+  content: none;
+}
+
+.btn.btn-white {
+  border-color: var(--main-color);
+  background: transparent;
+  border: 1px solid #efeff1;
+}
+
+.btn.btn-white span {
+  color: var(--main-color);
+}
+
+.btn:hover {
+  border-color: var(--sec-color);
+  background: var(--sec-color);
+  color: var(--dark-color) !important;
+}
+
+.btn.btn-white:hover {
+  /* background: var(--main-color);
+    border-color: var(--main-color); */
+  border-color: var(--main-color);
+  background: transparent;
+  border: 1px solid #efeff1;
+}
+
+.btn.btn-white span {
+  transition: color 0.25s ease-in-out;
+  color: #000;
+}
+
+/* .btn.btn-white:hover span {
+    color: #fff;
+} */
+
+.btn.btn_outline {
+  background: transparent;
+  border: 1.6px solid rgba(85, 7, 161, 1);
+  border-radius: 50px;
+}
+
+/* End Buttons */
+
+.tag {
+  background: #008aba1a;
+  padding: 9px 20px;
+  border-radius: 36px;
+  color: #008aba;
+  display: inline-block;
+  font-size: 13px;
+}
+
+/* floating btn */
+
+.float_btn {
+  position: absolute !important;
+  right: -156px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  background: rgba(160, 241, 254, 1);
+  color: rgba(25, 24, 27, 1);
+  animation: float 3s ease-in-out infinite;
+  pointer-events: none;
+  top: 60%;
+}
+
+.float_btn img {
+  position: absolute;
+  left: -10px;
+  top: -9px;
+}
+
+/* Floating animation for the button */
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-25px, 10px);
+  }
+}
+@keyframes float_down {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-25px, 20px);
+  }
+}
+/* Bouncing arrow animation */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+/* Odometer */
+.counter-item {
+  direction: ltr;
+}
