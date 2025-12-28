@@ -31,7 +31,15 @@
 
 @media (max-width: 991px) {
   /* Start Nav */
-
+  
+  .main-navbar {
+    padding: 12px 0;
+  }
+  
+  .navbar-logo {
+    max-height: 40px;
+  }
+  
   .nav-menu {
     display: none;
   }
@@ -234,6 +242,20 @@
   .login-frame-image .left-notsh img {
     display: none;
   }
+  
+  .main-navbar {
+    padding: 10px 0;
+  }
+  
+  .navbar-logo {
+    max-height: 35px;
+  }
+  
+  .main-navbar .btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  
   .hero {
     position: relative;
     padding: 60px 0px 50px;

@@ -333,18 +333,18 @@ span.live_link {
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
-/* أنيميشن أنا موجود */
-@keyframes attention {
+/* Attention animation */
+@keyframes attention-1 {
   0%   { transform: translate(0, 0); }
-  10%  { transform: translateY(-5px); }   /* فوق */
-  20%  { transform: translateY(5px); }    /* تحت */
-  30%  { transform: translateY(-5px); }   /* فوق */
-  40%  { transform: translateY(5px); }    /* تحت */
-  50%  { transform: translateX(5px); }    /* يمين */
-  60%  { transform: translateX(-5px); }   /* شمال */
-  70%  { transform: translateX(5px); }    /* يمين */
-  80%  { transform: translateX(-5px); }   /* شمال */
-  100% { transform: translate(0, 0); }     /* يرجع مكانه */
+  10%  { transform: translateY(-1px); }   /* up */
+  20%  { transform: translateY(1px); }    /* down */
+  30%  { transform: translateY(-1px); }   /* up */
+  40%  { transform: translateY(1px); }    /* down */
+  10%  { transform: translateX(1px); }    /* right */
+  60%  { transform: translateX(-1px); }   /* left */
+  70%  { transform: translateX(1px); }    /* right */
+  80%  { transform: translateX(-1px); }   /* left */
+  100% { transform: translate(0, 0); }     /* return to position */
 }
 
 .btn.btn_outline-animation {
@@ -352,9 +352,41 @@ span.live_link {
   animation: attention;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+  position: relative;
+  overflow: hidden;
 }
 .btn.btn_outline-animation:hover {
   animation-play-state: paused;
+}
+
+/* Animated wave on button */
+.btn.btn_outline-animation::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: wave-move 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes wave-move {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 .hero_btns_wrap .btn img {
   padding-inline-end: 5px;
@@ -428,6 +460,29 @@ p.btn_txt_under a {
 .login-frame-image .login-frame-image-box img {
   border-radius: 20px;
 }
+
+/* Fixed Navbar Styles */
+.main-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  background: #3e0f7f;
+  padding: 15px 0;
+  transition: all 0.3s ease;
+}
+
+.navbar-content {
+  width: 100%;
+}
+
+.navbar-logo {
+  max-height: 50px;
+  width: auto;
+}
+
 .hero_items .item {
   margin-bottom: 50px;
   backdrop-filter: blur(20px);
@@ -2096,7 +2151,7 @@ footer p.copyrights {
 
 .logos-wrapper {
   overflow: hidden;
-  direction: ltr; /* مهم لضمان حركة من اليمين لليسار */
+  direction: ltr; /* Important to ensure movement from right to left */
 }
 
 .logos-track {
@@ -2228,7 +2283,7 @@ footer p.copyrights {
   align-items: flex-start;
 }
 
-/* Sticky Image Container - الصورة تبدأ من نفس مستوى أول مقطع نصي */
+/* Sticky Image Container - Image starts at the same level as the first text block */
 .sticky-image-container {
   position: relative;
   top: 0;
@@ -2242,15 +2297,15 @@ footer p.copyrights {
   z-index: 1;
   flex-shrink: 0;
   align-self: flex-start;
-  /* محاذاة الصورة مع أول مقطع نصي - margin-top ثابت */
+  /* Align image with first text block - fixed margin-top */
   margin-top: 295px;
   margin-bottom: -200px;
   padding-top: 0;
-  /* الصورة ظاهرة دائماً */
+  /* Image always visible */
   opacity: 1;
 }
 
-/* جعل الصورة sticky فقط عند وصول أول نص */
+/* Make image sticky only when first text is reached */
 .sticky-image-container.sticky-active {
   position: sticky;
   top: 50vh;
@@ -2293,13 +2348,13 @@ footer p.copyrights {
   scroll-margin-top: 20vh;
 }
 
-/* محاذاة الصورة مع أول مقطع نصي - الصورة تبدأ من نفس مستوى أول نص */
+/* Align image with first text block - Image starts at the same level as first text */
 .sticky-text-block:first-child {
   margin-top: 0;
   padding-top: 0;
 }
 
-/* محاذاة الصورة مع أول مقطع - الصورة تبدأ من نفس المستوى */
+/* Align image with first block - Image starts at the same level */
 .sticky-scroll-wrapper {
   align-items: flex-start;
 }
@@ -2578,9 +2633,9 @@ footer p.copyrights {
   color: #000;
   width: 75px;
   height: 35px;
-  line-height: 40px;         /* توسيط عمودي بدون Flex */
-  text-align: center;        /* توسيط أفقي */
-  border-radius: 20px;       /* شكل كبسولة */
+  line-height: 40px;         /* Vertical centering without Flex */
+  text-align: center;        /* Horizontal centering */
+  border-radius: 20px;       /* Capsule shape */
   font-weight: bold;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   margin: -6px -15 0 6px;
@@ -2731,27 +2786,27 @@ footer p.copyrights {
 }
 
 /* Hero CTA Button - Fixed during scroll */
-.cta-btn-fixed {
+/* .cta-btn-fixed {
   position: relative;
   transition: all 0.3s ease;
   z-index: 1000;
-}
+} */
 
-.cta-btn-fixed.cta-fixed {
+/* .cta-btn-fixed.cta-fixed {
   position: fixed;
   top: 20px;
   left: 20px;
   z-index: 1000;
   opacity: 1;
   visibility: visible;
-}
+} */
 
-.cta-btn-fixed.cta-hidden {
+/* .cta-btn-fixed.cta-hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
-
+ */
 
 
 
